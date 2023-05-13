@@ -11,9 +11,10 @@ public class FileMaster implements FileMasterInterface {
         this.formatter = formatter;
     }
 
-    public void exportData(int id, String name, int count, int dropProbability) {
+    public void exportData(int id, String name, int count) {
         try (FileWriter fw = new FileWriter("file.txt", true)) {
-            fw.write(formatter.returnFormated(id, name, count, dropProbability));
+            fw.write(formatter.returnFormated(id, name, count));
+            fw.write("\n");
             fw.flush();
         } catch (IOException e) {
             System.out.println("ERROR: Данные не будут записаны в файл");

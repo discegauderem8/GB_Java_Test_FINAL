@@ -6,28 +6,36 @@ import java.util.Random;
 
 public class Warehouse implements ChanceMaster, PrizeGiver {
     private ArrayList<Toys> toysList = new ArrayList<>();
-    private FileMasterInterface fileMaster;
 
-    public Warehouse(FileMasterInterface fileMaster) {
-        this.fileMaster = fileMaster;
+    public ArrayList<Toys> getToysList() {
+        return toysList;
     }
 
     public void addToys(Toys newItem) {
         boolean hasThisItem = false;
         for (Toys item : toysList
         ) {
-             if (item.getName() == newItem.getName()){
-                 item.setCount(item.getCount() + newItem.getCount());
-                 hasThisItem = true;
-             }
+            if (item.getName() == newItem.getName()) {
+                item.setCount(item.getCount() + newItem.getCount());
+                hasThisItem = true;
+            }
         }
-        if (!hasThisItem){
+        if (!hasThisItem) {
             this.toysList.add(newItem);
         }
     }
 
     public void removeToys(Toys newItem) {
         this.toysList.remove(newItem);
+    }
+
+    public void updateData() {
+        for (Toys item : toysList
+        ) {
+             if (item.getCount() <= 0){
+                 removeToys(item);
+             }
+        }
     }
 
     public void assignDropChances() {
@@ -67,6 +75,7 @@ public class Warehouse implements ChanceMaster, PrizeGiver {
             }
             winZoneBottom = winZoneTop;
         }
+        updateData();
 
     }
 }
